@@ -2,23 +2,32 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <map>
 
-struct vertex
+struct Vertex
 {
+    Vertex() = default;
+
+    Vertex(int id, std::string name)
+        :id(id), name(name)
+    {}
+
     int id;
     std::string name;
 };
 
-struct edge
+struct Edge
 {
-    vertex v1, v2;
+    Vertex v1, v2;
     double length;
     std::string descr;
 };
 
 int main()
 {
-    std::vector<vertex> v;
+    std::map<int, std::string> vertices;
+
+    std::vector<Edge> edges;
 
     std::ifstream file;
     file.open("export.txt");
@@ -32,16 +41,38 @@ int main()
         {
             line.erase(0, 2);
 
-            vertex temp;
+            int id = stoi(line.substr(0, line.find(" ")));
+            std::string name = line.substr(line.find(" ")+1);
 
-            temp.id = stoi(line.substr(0, line.find(" ")));
-            temp.name = line.substr(line.find(" ")+1);
+            vertices[id] = name;
+        }
+        else if(isdigit(line[0]))
+        {
+            Edge temp;
 
-            v.push_back(temp);
+            int id = stoi(line.substr(0, line.find(" ")));
+
+            
+
+            temp.v1 = Vertex(id, vertices[id]);
+
+            line.erase(0, line.find(" ")+1);
+
+            id = stoi(line.substr(0, line.find(" ")));
+
+            temp.v2 = Vertex(id, vertices[id]);
+
+            line.erase(0, line.find(" ")+1);
+
+            temp.length = stod(line.substr(0, line.find(" ")));
+
+            temp.descr = line.substr(line.find("[") + 1, line.find("]") - line.find("[") - 1);
+
+            edges.push_back(temp);
         }
     }
 
-    for(auto e: v)  std::cout << e.id << " " << e.name << "\n";
+    for(auto e: edges)  std::cout << e.v1.id << " " << e.v2.id << " " << e.length << " " << e.descr << "\n";
 
     return 0;
 }
