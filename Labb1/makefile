@@ -1,4 +1,6 @@
-main: main.cpp
-	g++ -std=c++11 main.cpp -o main
+src = $(wildcard *.cpp)
+
+main: $(src)
+	g++ $(src) -std=c++11 -o main
 run: main
 	./main
