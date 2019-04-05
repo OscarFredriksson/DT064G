@@ -3,7 +3,54 @@
 
 Graph::Graph(std::string path)
 {
-    load(path);
+    fillMatrix();
+    loadMatrix(path);
+}
+
+void Graph::fillMatrix()
+{
+    for(int i = 0; i < 48; i++)
+    {
+        std::vector<double> temp;
+
+        for(int j = 0; j < 48; j++) temp.push_back(0.0); 
+
+        adjacencyMatrix.push_back(temp);
+    }
+}
+
+void Graph::loadMatrix(std::string path)
+{
+    std::ifstream file;
+    file.open(path);
+
+    while(!file.eof())
+    {
+        std::string line;
+        std::getline(file, line);
+
+        if(isdigit(line[0]))
+        {
+            int id1 = stoi(line.substr(0, line.find(" ")));      
+
+            line.erase(0, line.find(" ")+1);
+
+            int id2 = stoi(line.substr(0, line.find(" ")));
+
+            line.erase(0, line.find(" ")+1);
+
+            adjacencyMatrix[id1][id2] = stod(line.substr(0, line.find(" ")));
+        }
+    }   
+}
+
+void Graph::printMatrix()
+{
+    for(auto v1: adjacencyMatrix)
+    {
+        for(auto length: v1)  std::cout << length << "\t";
+        std::cout << std::endl;
+    }
 }
 
 void Graph::load(std::string path)
@@ -16,7 +63,7 @@ void Graph::load(std::string path)
         std::string line;
         std::getline(file, line);
 
-        if(line.substr(0,1) == "M")
+        if(line.substr(0, 1) == "M")
         {
             line.erase(0, 2);
 

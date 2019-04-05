@@ -30,13 +30,24 @@ class Graph
 public:
     Graph(std::string path);
 
+    void loadMatrix(std::string path);
+
     void load(std::string path);
+
+    void fillMatrix();
+
+    void printMatrix();
+
+    void DFS();
 
     void print();
 
 private:    
     std::map<int, std::string> vertices;
+    
     std::vector<Edge> edges;
+
+    std::vector<std::vector<double>> adjacencyMatrix;
 };
 
 #endif

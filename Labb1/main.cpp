@@ -5,7 +5,7 @@ int main()
     std::string path = "export.txt";
     Graph graph(path);
 
-    graph.print();
+    graph.printMatrix();
 
     return 0;
 }
