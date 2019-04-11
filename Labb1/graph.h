@@ -4,50 +4,30 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <map>
-
-struct Vertex
-{
-    Vertex() = default;
-
-    Vertex(int id, std::string name)
-        :id(id), name(name)
-    {}
-
-    int id;
-    std::string name;
-};
-
-struct Edge
-{
-    Vertex v1, v2;
-    double length;
-    std::string descr;
-};
 
 class Graph
 {
 public:
-    Graph(std::string path);
-
-    void loadMatrix(std::string path);
-
-    void load(std::string path);
-
-    void fillMatrix();
-
-    void printMatrix();
+    Graph(int nrOfVertices);
+    
+    void BFS();
 
     void DFS();
 
-    void print();
+    bool checkSearch();
 
-private:    
-    std::map<int, std::string> vertices;
-    
-    std::vector<Edge> edges;
+    friend std::istream& operator>>(std::istream& is, Graph & graph);
 
-    std::vector<std::vector<double>> adjacencyMatrix;
+    friend std::ostream& operator<<(std::ostream& os, const Graph & graph);    
+
+private:  
+    void resetVisited();
+
+
+    std::vector<std::vector<double>> matrix;
+    std::vector<bool> visited;
+
+
 };
 
 #endif

@@ -1,33 +1,86 @@
 #include "graph.h"
-#include <fstream>
+#include <stack>
+#include <list>
 
-Graph::Graph(std::string path)
-{
-    fillMatrix();
-    loadMatrix(path);
-}
+Graph::Graph(int nrOfVertices):
+    visited(nrOfVertices, false),
+    matrix(nrOfVertices, std::vector<double>(nrOfVertices, -1))
+{}
 
-void Graph::fillMatrix()
+void Graph::BFS()
 {
-    for(int i = 0; i < 48; i++)
+    resetVisited();
+
+    std::stack<int> neighbours;
+    
+    const int start = 0;
+
+    neighbours.push(start);
+    visited[start] = true;
+
+    while(!neighbours.empty())
     {
-        std::vector<double> temp;
+        int i = neighbours.top();
+        neighbours.pop();
 
-        for(int j = 0; j < 48; j++) temp.push_back(0.0); 
-
-        adjacencyMatrix.push_back(temp);
+        for(int j = 0; j < matrix[i].size(); j++)
+        {
+            if(!visited[j] && matrix[j][i] != -1)
+            {
+                visited[j] = true;
+                neighbours.push(j);
+            }
+        }
     }
 }
 
-void Graph::loadMatrix(std::string path)
+void Graph::DFS()
 {
-    std::ifstream file;
-    file.open(path);
+    resetVisited();
 
-    while(!file.eof())
+    std::list<int> neighbours;
+    
+    const int start = 0;
+
+    neighbours.push_back(start);
+    visited[start] = true;
+
+    while(!neighbours.empty())
+    {
+        int i = neighbours.front();
+        neighbours.pop_front();
+
+        for(int j = 0; j < matrix[i].size(); j++)
+        {
+            if(!visited[j] && matrix[j][i] != -1)
+            {
+                visited[j] = true;
+                neighbours.push_back(j);
+            }
+        }
+    }
+}
+
+bool Graph::checkSearch()
+{
+    for(auto v: visited)    
+        if(!v)  
+            return false;
+
+    return true;
+}
+
+void Graph::resetVisited()
+{
+    for(auto v: visited)    v = false;
+}
+
+std::istream& operator>>(std::istream& is, Graph & graph)
+{
+    while(!is.eof())
     {
         std::string line;
-        std::getline(file, line);
+        std::getline(is, line);
 
         if(isdigit(line[0]))
         {
@@ -39,66 +92,21 @@ void Graph::loadMatrix(std::string path)
 
             line.erase(0, line.find(" ")+1);
 
-            adjacencyMatrix[id1][id2] = stod(line.substr(0, line.find(" ")));
+            graph.matrix[id1][id2] = stod(line.substr(0, line.find(" ")));
         }
-    }   
+    }  
+
+    return is; 
 }
 
-void Graph::printMatrix()
+std::ostream& operator<<(std::ostream& os, const Graph & graph)
 {
-    for(auto v1: adjacencyMatrix)
+    for(auto v1: graph.matrix)
     {
-        for(auto length: v1)  std::cout << length << "\t";
-        std::cout << std::endl;
+        for(auto length: v1)  os << length << "\t";
+        
+        os << "\n";
     }
-}
 
-void Graph::load(std::string path)
-{
-    std::ifstream file;
-    file.open(path);
-
-    while(!file.eof())
-    {
-        std::string line;
-        std::getline(file, line);
-
-        if(line.substr(0, 1) == "M")
-        {
-            line.erase(0, 2);
-
-            int id = stoi(line.substr(0, line.find(" ")));
-            std::string name = line.substr(line.find(" ")+1);
-
-            vertices[id] = name;
-        }
-        else if(isdigit(line[0]))
-        {
-            Edge temp;
-
-            int id = stoi(line.substr(0, line.find(" ")));      
-
-            temp.v1 = Vertex(id, vertices[id]);
-
-            line.erase(0, line.find(" ")+1);
-
-            id = stoi(line.substr(0, line.find(" ")));
-
-            temp.v2 = Vertex(id, vertices[id]);
-
-            line.erase(0, line.find(" ")+1);
-
-            temp.length = stod(line.substr(0, line.find(" ")));
-
-            temp.descr = line.substr(line.find("[") + 1, line.find("]") - line.find("[") - 1);
-
-            edges.push_back(temp);
-
-        }
-    }
-}
-
-void Graph::print()
-{
-    for(auto e: edges)  std::cout << e.v1.id << " " << e.v2.id << " " << e.length << " " << e.descr << "\n";
+    return os;
 }
