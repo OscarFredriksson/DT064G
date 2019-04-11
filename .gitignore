@@ -1,5 +1,8 @@
+#ignore binary files
 *
 !*.*
 !*/
+#------
 
+.exe
 .DS_Store
