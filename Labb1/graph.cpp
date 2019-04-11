@@ -7,7 +7,7 @@ Graph::Graph(int nrOfVertices):
     matrix(nrOfVertices, std::vector<double>(nrOfVertices, -1))
 {}
 
-void Graph::BFS()
+bool Graph::BFS()
 {
     resetVisited();
 
@@ -32,9 +32,11 @@ void Graph::BFS()
             }
         }
     }
+
+    return checkSearch();
 }
 
-void Graph::DFS()
+bool Graph::DFS()
 {
     resetVisited();
 
@@ -59,6 +61,8 @@ void Graph::DFS()
             }
         }
     }
+
+    return checkSearch();
 }
 
 bool Graph::checkSearch()

@@ -12,19 +12,11 @@ int main()
 
     file >> graph;
 
-    graph.BFS();
+    if(graph.BFS()) std::cout << "BFS found all nodes" << std::endl;
+    else            std::cout << "Graph is not connected" << std::endl;
 
-    if(graph.checkSearch())
-        std::cout << "BFS found all nodes" << std::endl;
-    else
-        std::cout << "Graph is not connected" << std::endl;
-
-    graph.DFS();
-
-    if(graph.checkSearch())
-        std::cout << "DFS found all nodes" << std::endl;
-    else
-        std::cout << "Graph is not connected" << std::endl;
+    if(graph.DFS()) std::cout << "DFS found all nodes" << std::endl;
+    else            std::cout << "Graph is not connected" << std::endl;
 
     return 0;
 }

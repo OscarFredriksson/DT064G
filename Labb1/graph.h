@@ -10,11 +10,9 @@ class Graph
 public:
     Graph(int nrOfVertices);
     
-    void BFS();
+    bool BFS();
 
-    void DFS();
-
-    bool checkSearch();
+    bool DFS();
 
     friend std::istream& operator>>(std::istream& is, Graph & graph);
 
@@ -22,6 +20,9 @@ public:
 
 private:  
     void resetVisited();
+
+    bool checkSearch();
+
 
 
     std::vector<std::vector<double>> matrix;
