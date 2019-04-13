@@ -90,6 +90,7 @@ M 47 D025
 18 2 44.52 [Bultgatan]
 2 18 44.52 [Bultgatan]
 19 3 6.23 [Stängd pizzeria]
+3 19 6.23 [Stängd pizzeria]
 10 20 4.72 [Sidsjövägen]
 20 10 4.72 [Sidsjövägen]
 17 21 18.68 [Bergsgatan]
