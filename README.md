@@ -1,5 +1,5 @@
 # DT064G
 Datastrukturer och Algoritmer
 
-### Labb1:    BFS, DFS och Dijkstras algoritm
-### Labb2:    Tidsmätning av sorteringsalgoritmer
+* ### Labb1:&ensp;&ensp;BFS, DFS och Dijkstras algoritm
+* ### Labb2:&ensp;&ensp;Tidsmätning av sorteringsalgoritmer
