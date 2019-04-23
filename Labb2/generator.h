@@ -18,13 +18,9 @@ public:
     std::vector<int> falling(const int N);
 
 private:
-    void set_dist(const int N);
-
     std::mt19937 gen;
 
-    using distribution = std::uniform_int_distribution<int>;
-
-    distribution dist;
+    std::uniform_int_distribution<int> dist;
 };
 
 #endif
