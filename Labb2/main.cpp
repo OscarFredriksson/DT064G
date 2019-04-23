@@ -1,31 +1,28 @@
 #include <iostream>
-#include <random>
 #include <chrono>
 #include <vector>
+#include "generator.h"
 
-std::mt19937 gen;
-
-std::uniform_int_distribution<int> dist(1, 999);
-
-int* find_min(int* begin, int* end)
+int& find_min(int* begin, int* end)
 {
-    auto min = begin;
+    int* min = begin;
+    
     while(begin++ != end)
     {
         if(*begin < *min)   min = begin;
     }
 
-    return min;
+    return *min;
 } 
 
 void selection_sort(int* begin, int* end)
 {
-    for(int * i = begin; i != end; i++)
+    std::for_each(begin, end, [&end](int& iter)
     {
-        int* min = find_min(i, end);
+        int& min = find_min(&iter, end);
 
-        std::swap(*i, *min);
-    }
+        std::swap(iter, min);
+    });
 }
 
 void insertion_sort(int* begin, int* end)
@@ -46,20 +43,38 @@ void print(const int& i)
 
 int main()
 {
-    std::vector<int> numbers;
+    Generator gen(1, 50);
 
-    for(int i = 0; i < 20; i++)
-        numbers.push_back(dist(gen));
+    std::vector<int> src = gen.random(30);
 
-    std::for_each(&numbers.front(), &numbers.back(), print);
+    std::for_each(src.begin(), src.end(), print);
     std::cout << "\n";
 
-    //selection_sort(&numbers.front(), &numbers.back());
-    
+    src = gen.constant(30);
+
+    std::for_each(src.begin(), src.end(), print);
+    std::cout << "\n";
+
+    src = gen.rising(30);
+
+    std::for_each(src.begin(), src.end(), print);
+    std::cout << "\n";
+
+    src = gen.falling(30);
+
+    std::for_each(src.begin(), src.end(), print);
+    std::cout << "\n";
+
+
+    /*selection_sort(&numbers.front(), &numbers.back());
+    std::for_each(numbers.begin(), numbers.end(), print);
+    std::cout << "\n";
+
+    numbers = src;
     insertion_sort(&numbers.front(), &numbers.back());
+    std::for_each(numbers.begin(), numbers.end(), print);
 
-    std::for_each(&numbers.front(), &numbers.back(), print);
-    std::cout << "\n";
+    std::cout << "\n";*/
 
 
     return 0;
