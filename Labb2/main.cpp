@@ -36,20 +36,19 @@ double stdDev(std::vector<double> src)
     
     double ret = std::sqrt(1.0 / (src.size() - 1) * square_sum);
 
-    return round(ret, 4);
+    return round(ret, 6);
 }
 
 void test_sort()
 {
     const int samples = 5;
-    int N = 0;
+    int N_start = 20000;
+    int N_end = 200000;
 
-    Generator gen(1, 500);
+    Generator gen(1, 9999);
 
-    for(int j = 0; j < 10; j++)
+    for(int N = N_start; N <= N_end; N+=20000)
     {
-        N += 20000;
-
         std::vector<double> times;
 
         for(int i = 0; i < samples; i++)
