@@ -2,6 +2,7 @@
 #include <chrono>
 #include <vector>
 #include <algorithm>
+#include <fstream>
 #include "generator.h"
 #include "sorts.h"
 
@@ -10,11 +11,18 @@ void print(const int& i)
     std::cout << i << " ";
 }
 
+double round(double val, int decimal_places)
+{
+    return std::floor(val * std::pow(10, decimal_places) + 0.5) / std::pow(10, decimal_places);
+}
+
 double mean(std::vector<double> src)
 {
-    auto sum = std::accumulate(src.begin(), src.end(), 0.0);
-    
-    return sum/src.size();
+    double sum = std::accumulate(src.begin(), src.end(), 0.0); 
+
+    double ret = sum/src.size();
+
+    return round(ret, 4);
 }
 
 double stdDev(std::vector<double> src)
@@ -26,35 +34,49 @@ double stdDev(std::vector<double> src)
         return sum += std::pow(val - avg, 2);
     });
     
-    return std::sqrt(1.0 / (src.size() - 1) * square_sum);
+    double ret = std::sqrt(1.0 / (src.size() - 1) * square_sum);
+
+    return round(ret, 4);
 }
 
 void test_sort()
 {
     const int samples = 5;
+    int N = 0;
 
     Generator gen(1, 500);
 
-    std::vector<double> times;
-
-    for(int i = 0; i < samples; i++)
+    for(int j = 0; j < 10; j++)
     {
-        std::vector<int> src = gen.random(20000);
+        N += 20000;
 
-        auto start = std::chrono::high_resolution_clock::now();
+        std::vector<double> times;
 
-        insertion_sort(&src.front(), &src.back());
+        for(int i = 0; i < samples; i++)
+        {
+            std::vector<int> src = gen.random(N);
 
-        auto end = std::chrono::high_resolution_clock::now();
+            auto start = std::chrono::high_resolution_clock::now();
 
-        std::chrono::duration<double> duration = end - start;
+            insertion_sort(&src.front(), &src.back());
 
-        times.push_back(duration.count());
+            auto end = std::chrono::high_resolution_clock::now();
+
+            std::chrono::duration<double> duration = end - start;
+
+            times.push_back(duration.count());
+        }
+
+        //std::cout << "Mean:" << "\t" << mean(times) << "ms" << "\n";
+        //std::cout << "StdDev:" << "\t" << stdDev(times) << "ms" << "\n";
+
+        std::string path = "benchmarks/insertion_sort/random.data";
+        std::ofstream file;
+
+        file.open(path.c_str(), std::fstream::app);
+
+        file << N << "\t\t" << mean(times) << "\t\t" << stdDev(times) << "\t\t" << samples << "\n";
     }
-
-    std::cout << "Mean:" << "\t" << mean(times) << "ms" << "\n";
-    std::cout << "StdDev:" << "\t" << stdDev(times) << "ms" << "\n";
-    
 }
 
 int main()
@@ -98,7 +120,6 @@ int main()
     std::for_each(numbers.begin(), numbers.end(), print);
 
     std::cout << "\n";*/
-
 
     return 0;
 }
