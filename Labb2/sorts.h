@@ -26,9 +26,9 @@ void insertion_sort(int* begin, int* end)
 {
     for(int* i = begin; i != end+1; i++)
     {
-        for(int* j = i; j != begin && *(j-1) > *j; j--)
+        for(int* j = i; j != begin && *(j - 1) > *j; j--)
         {
-            std::swap(*j, *(j-1));
+            std::swap(*j, *(j - 1));
         }
     }
 }
