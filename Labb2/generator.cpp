@@ -1,4 +1,5 @@
 #include "generator.h"
+#include <algorithm>
 
 Generator::Generator(const int min, const int max):
     gen(std::random_device()()),
