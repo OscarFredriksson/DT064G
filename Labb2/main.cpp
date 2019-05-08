@@ -39,17 +39,25 @@ double stdDev(std::vector<double> src)
     return round(ret, 4);
 }
 
-void test_sort()
+template<typename Sort>
+void test_sort(Sort sort)
 {
     const int samples = 5;
-    int N = 0;
+    int start_N =   20000;
+    int end_N =     400000;
 
     Generator gen(1, 500);
 
-    for(int j = 0; j < 10; j++)
-    {
-        N += 20000;
+    std::string path = sort.path + "random.data";
+    std::ofstream file;
 
+    file.open(path.c_str());
+
+    file << sort.name << "\n";
+    file << "N" << "\t\t\t" << "T[ms]" << "\t\t" << "Stdev[ms]" << "\t" << "Samples" << "\n";
+
+    for(int N = start_N; N <= end_N; N+= 20000)
+    {
         std::vector<double> times;
 
         for(int i = 0; i < samples; i++)
@@ -58,68 +66,34 @@ void test_sort()
 
             auto start = std::chrono::high_resolution_clock::now();
 
-            insertion_sort(&src.front(), &src.back());
+            sort(&src.front(), &src.back());
 
             auto end = std::chrono::high_resolution_clock::now();
 
             std::chrono::duration<double> duration = end - start;
 
             times.push_back(duration.count());
+
+            //std::cout << duration.count() << ", ";
         }
-
-        //std::cout << "Mean:" << "\t" << mean(times) << "ms" << "\n";
-        //std::cout << "StdDev:" << "\t" << stdDev(times) << "ms" << "\n";
-
-        std::string path = "benchmarks/insertion_sort/random.data";
-        std::ofstream file;
-
-        file.open(path.c_str(), std::fstream::app);
+        //std::cout << "\n";
 
         file << N << "\t\t" << mean(times) << "\t\t" << stdDev(times) << "\t\t" << samples << "\n";
     }
+    std::cout << "\n";
 }
 
 int main()
 {
-    test_sort();
+    test_sort(Insertion_Sort());
+    
+    /*test_sort(Selection_Sort());
 
-    /*Generator gen(1, 50);
+    test_sort(Partition_Quick_Sort());
 
-    std::vector<int> src = gen.random(30);
-
-    std::for_each(src.begin(), src.end(), print);
-    std::cout << "\n";
-
-    median_quick_sort(&src.front(), &src.back());
-
-    std::for_each(src.begin(), src.end(), print);
-    std::cout << "\n";*/
-
-    /*src = gen.constant(30);
-
-    std::for_each(src.begin(), src.end(), print);
-    std::cout << "\n";
-
-    src = gen.rising(30);
-
-    std::for_each(src.begin(), src.end(), print);
-    std::cout << "\n";
-
-    src = gen.falling(30);
-
-    std::for_each(src.begin(), src.end(), print);
-    std::cout << "\n";*/
-
-
-    /*selection_sort(&numbers.front(), &numbers.back());
-    std::for_each(numbers.begin(), numbers.end(), print);
-    std::cout << "\n";
-
-    numbers = src;
-    insertion_sort(&numbers.front(), &numbers.back());
-    std::for_each(numbers.begin(), numbers.end(), print);
-
-    std::cout << "\n";*/
+    test_sort(Median_Quick_Sort());*/
+    
+    //test_sort(Std_Sort());
 
     return 0;
 }
