@@ -46,7 +46,7 @@ template<typename Sort>
 void benchmark(Sort sort, DataType datatype)
 {
     const int samples = 5;
-    int start_N = std::pow(10, 5);
+    int start_N = std::pow(10, 3);
     int end_N = start_N * 10;
 
     std::string path;
@@ -90,7 +90,7 @@ void benchmark(Sort sort, DataType datatype)
                                 break;
             }
 
-            std::chrono::time_point<std::chrono::high_resolution_clock> start = std::chrono::high_resolution_clock::now();
+            auto start = std::chrono::high_resolution_clock::now();
 
             sort(&src.front(), &src.back());
 
@@ -116,7 +116,7 @@ int main()
 {
     auto start = std::chrono::high_resolution_clock::now();
 
-    /*std::cout << "Starting standard sort" << "\n";
+    std::cout << "Starting standard sort" << "\n";
     std::cout << "Random value:" << "\n";
     benchmark(Std_Sort(), DataType::Random);
     std::cout << "Constant value:" << "\n";
@@ -125,42 +125,42 @@ int main()
     benchmark(Std_Sort(), DataType::Falling);
     std::cout << "Rising value:" << "\n";
     benchmark(Std_Sort(), DataType::Rising);
-    std::cout << "Standard sort done!\n\n";*/ 
+    std::cout << "Standard sort done!\n\n";
 
-    /*std::cout << "Starting median quick sort" << "\n";
+    std::cout << "Starting median quick sort" << "\n";
     std::cout << "Random value:" << "\n";
     benchmark(Median_Quick_Sort(), DataType::Random);
-    //std::cout << "Constant value:" << "\n";
-    //benchmark(Median_Quick_Sort(), DataType::Constant);
+    std::cout << "Constant value:" << "\n";
+    benchmark(Median_Quick_Sort(), DataType::Constant);
     std::cout << "Falling value:" << "\n";
     benchmark(Median_Quick_Sort(), DataType::Falling);
     std::cout << "Rising value:" << "\n";
     benchmark(Median_Quick_Sort(), DataType::Rising);
-    std::cout << "Median quick sort done!\n\n"; */
+    std::cout << "Median quick sort done!\n\n";
 
-    /*std::cout << "Starting partition sort" << "\n";
+    std::cout << "Starting partition sort" << "\n";
     std::cout << "Random value:" << "\n";
     benchmark(Partition_Quick_Sort(), DataType::Random);
-    //std::cout << "Constant value:" << "\n";
-    //benchmark(Partition_Quick_Sort(), DataType::Constant);
+    std::cout << "Constant value:" << "\n";
+    benchmark(Partition_Quick_Sort(), DataType::Constant);
     std::cout << "Falling value:" << "\n";
     benchmark(Partition_Quick_Sort(), DataType::Falling);
     std::cout << "Rising value:" << "\n";
     benchmark(Partition_Quick_Sort(), DataType::Rising);
-    std::cout << "Partition quick sort done!\n\n"; */
+    std::cout << "Partition quick sort done!\n\n";
 
     std::cout << "Insertion sort, timestamps:" << "\n";
-    //std::cout << "Random value:" << "\n";
-    //benchmark(Insertion_Sort(), DataType::Random);
+    std::cout << "Random value:" << "\n";
+    benchmark(Insertion_Sort(), DataType::Random);
     std::cout << "Constant value:" << "\n";
     benchmark(Insertion_Sort(), DataType::Constant);
-    //std::cout << "Falling value:" << "\n";
-    //benchmark(Insertion_Sort(), DataType::Falling);
-    //std::cout << "Rising value:" << "\n";
-    //benchmark(Insertion_Sort(), DataType::Rising);
+    std::cout << "Falling value:" << "\n";
+    benchmark(Insertion_Sort(), DataType::Falling);
+    std::cout << "Rising value:" << "\n";
+    benchmark(Insertion_Sort(), DataType::Rising);
     std::cout << "Insertion sort done!\n\n"; 
 
-    /*std::cout << "Selection sort, timestamps:" << "\n";
+    std::cout << "Selection sort, timestamps:" << "\n";
     std::cout << "Random value:" << "\n";
     benchmark(Selection_Sort(), DataType::Random);
     std::cout << "Constant value:" << "\n";
@@ -169,7 +169,7 @@ int main()
     benchmark(Selection_Sort(), DataType::Falling);
     std::cout << "Rising value:" << "\n";
     benchmark(Selection_Sort(), DataType::Rising);
-    std::cout << "Selection sort done!\n\n"; */
+    std::cout << "Selection sort done!\n\n";
 
     auto end = std::chrono::high_resolution_clock::now();
 
