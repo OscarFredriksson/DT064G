@@ -1,2 +1,12 @@
-Insertion sort - Rising data
-N           T[ms]       Stdev[ms]   Samples
+Insertion sort
+N			T[ms]		Stdev[ms]	Samples
+10000		0		0		5
+20000		0		0		5
+30000		0		0		5
+40000		0.0004		0.000547723		5
+50000		0		0		5
+60000		0		0		5
+70000		0		0		5
+80000		0		0		5
+90000		0		0		5
+100000		0		0		5

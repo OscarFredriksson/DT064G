@@ -1,4 +1,4 @@
-#include <algorithm>
+#include <algorithm> 
 
 int& find_min(int* begin, int* end)
 {
@@ -8,9 +8,8 @@ int& find_min(int* begin, int* end)
     {
         if(*begin < *min)   min = begin;
     }
-
     return *min;
-} 
+}
 
 void selection_sort(int* begin, int* end)
 {
@@ -81,3 +80,53 @@ void median_quick_sort(int* begin, int* end)
     median_quick_sort(begin, pivot - 1);    
     median_quick_sort(pivot + 1, end);
 }
+
+struct Median_Quick_Sort
+{
+    void operator()(int* begin, int* end)
+    {
+        median_quick_sort(begin, end);
+    }
+    const std::string path = "benchmarks/median_quick_sort/";
+    const std::string name = "Median quick sort";
+};
+
+struct Partition_Quick_Sort
+{
+    void operator()(int* begin, int* end)
+    {
+        partition_quick_sort(begin, end);   
+    }
+    const std::string path = "benchmarks/partition_quick_sort/";
+    const std::string name = "Partition quick sort";
+};
+
+struct Insertion_Sort
+{
+    void operator()(int* begin, int* end)
+    {
+        insertion_sort(begin, end);
+    }
+    const std::string path = "benchmarks/insertion_sort/";
+    const std::string name = "Insertion sort";
+};
+
+struct Selection_Sort
+{
+    void operator()(int* begin, int* end)
+    {
+        selection_sort(begin, end);
+    }
+    const std::string path = "benchmarks/selection_sort/";
+    const std::string name = "Selection sort";
+};
+
+struct Std_Sort
+{
+    void operator()(int* begin, int* end)
+    {
+        std::sort(begin, end);
+    }
+    const std::string path = "benchmarks/std_sort/";
+    const std::string name = "std::sort";
+};
