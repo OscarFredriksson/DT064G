@@ -1,4 +1,4 @@
-std::sort
+Standard sort
 N			T[ms]		Stdev[ms]	Samples
 100000		0.229905		0.0638034		5
 200000		0.453012		0.108164		5
