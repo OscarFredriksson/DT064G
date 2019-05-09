@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 sorts = ["insertion_sort", "selection_sort", "median_quick_sort", "partition_quick_sort", "std_sort"]
 data_formats = ["random", "constant", "falling", "rising"]
@@ -17,14 +18,16 @@ for sort in sorts:
 
         N_arr = []
         T_arr = []
+        stdDev_arr = []
 
         for line in lines:
             data = line.split()
             N_arr.append(int(data[0]))
             T_arr.append(float(data[1]))
+            stdDev_arr.append(float(data[2]))
 
         plt.clf()
-        plt.plot(N_arr, T_arr)
+        plt.errorbar(N_arr, T_arr, stdDev_arr, linestyle='None', marker='x')
         plt.ylabel("T[ms]")
         plt.xlabel("N elements")
 
@@ -33,8 +36,6 @@ for sort in sorts:
 
         export_path = "graphs/" + sort + "/" + data_format + ".png"
         plt.savefig(export_path)
-
-
 
         #plt.show()
 
