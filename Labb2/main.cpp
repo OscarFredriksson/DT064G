@@ -46,7 +46,7 @@ template<typename Sort>
 void benchmark(Sort sort, DataType datatype)
 {
     const int samples = 5;
-    int start_N = std::pow(10, 3);
+    int start_N = std::pow(10, 5);
     int end_N = start_N * 10;
 
     std::string path;
@@ -130,8 +130,8 @@ int main()
     std::cout << "Starting median quick sort" << "\n";
     std::cout << "Random value:" << "\n";
     benchmark(Median_Quick_Sort(), DataType::Random);
-    std::cout << "Constant value:" << "\n";
-    benchmark(Median_Quick_Sort(), DataType::Constant);
+    //std::cout << "Constant value:" << "\n";
+    //benchmark(Median_Quick_Sort(), DataType::Constant);
     std::cout << "Falling value:" << "\n";
     benchmark(Median_Quick_Sort(), DataType::Falling);
     std::cout << "Rising value:" << "\n";
@@ -141,11 +141,11 @@ int main()
     std::cout << "Starting partition sort" << "\n";
     std::cout << "Random value:" << "\n";
     benchmark(Partition_Quick_Sort(), DataType::Random);
-    std::cout << "Constant value:" << "\n";
-    benchmark(Partition_Quick_Sort(), DataType::Constant);
-    std::cout << "Falling value:" << "\n";
-    benchmark(Partition_Quick_Sort(), DataType::Falling);
-    std::cout << "Rising value:" << "\n";
+    //std::cout << "Constant value:" << "\n";
+    //benchmark(Partition_Quick_Sort(), DataType::Constant);
+    //std::cout << "Falling value:" << "\n";
+    //benchmark(Partition_Quick_Sort(), DataType::Falling);
+    //std::cout << "Rising value:" << "\n";
     benchmark(Partition_Quick_Sort(), DataType::Rising);
     std::cout << "Partition quick sort done!\n\n";
 
