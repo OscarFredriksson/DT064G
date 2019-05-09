@@ -49,23 +49,25 @@ void benchmark(Sort sort, DataType datatype)
     int start_N = std::pow(10, 3);
     int end_N = start_N * 10;
 
-    std::string path;
+    std::string datatype;
 
     switch(datatype)
     {  
-        case Random:    path = sort.path + "random.data";
+        case Random:    datatype = "random";
                         break;
-        case Constant:  path = sort.path + "constant.data";
+        case Constant:  datatype = "constant";
                         break;
-        case Rising:    path = sort.path + "rising.data";
+        case Rising:    datatype = "rising";
                         break;
-        case Falling:   path = sort.path + "falling.data";
+        case Falling:   datatype = "falling";
     }
+
+    const std::string path = sort.path + datatype + ".data";
     
     std::ofstream file;
     file.open(path.c_str());
 
-    file << sort.name << "\n";
+    file << sort.name << " - " << datatype << "\n";
     file << "N" << "\t\t\t" << "T[ms]" << "\t\t" << "Stdev[ms]" << "\t" << "Samples" << "\n";
 
     Generator gen(1, 9999);
