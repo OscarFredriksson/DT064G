@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import matplotlib.pyplot as plt
-import numpy as np
+import scipy.optimize as opt
 
 sorts = ["insertion_sort", "selection_sort", "median_quick_sort", "partition_quick_sort", "std_sort"]
 data_formats = ["random", "constant", "falling", "rising"]
