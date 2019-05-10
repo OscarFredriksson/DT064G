@@ -23,7 +23,7 @@ void selection_sort(int* begin, int* end)
 
 void insertion_sort(int* begin, int* end)
 {
-    for(int* i = begin; i != end+1; i++)
+    for(int* i = begin; i != end + 1; i++)
     {
         for(int* j = i; j != begin && *(j - 1) > *j; j--)
         {
@@ -42,11 +42,13 @@ int* partition(int* begin, int* end, int pivot = -1)
     {
         if(*j < pivot)
         {
-            std::swap(*i, *j);
             i++;
+            std::swap(*i, *j);
         }
     }
+
     std::swap(*i, *end);
+    
     return i;
 }
 
