@@ -64,8 +64,8 @@ void benchmark()
 {
     std::mt19937 gen(std::random_device{}());
 
-    const int samples = 5;
-    int start_N = std::pow(10, 4);
+    const int samples = 20;
+    int start_N = std::pow(10, 7);
     int end_N = start_N * 10;
 
     const std::string path = Algorithm::path + ".data";
@@ -76,16 +76,17 @@ void benchmark()
     file << Algorithm::name << "\n";
     file << "N" << "\t\t\t" << "T[ms]" << "\t\t" << "Stdev[ms]" << "\t" << "Samples" << "\n";
 
+    std::cout << "\nStartar test för " << Algorithm::name << "\n";
+
     for(int N = start_N; N <= end_N; N += start_N)
     {
         std::vector<double> times;
 
+        std::vector<int> src = get_primes(N);
+        Algorithm alg(src.begin(), src.end());
+
         for(int i = 0; i < samples; i++)
         {
-            std::vector<int> src = get_primes(N);
-
-            Algorithm alg(src.begin(), src.end());
-
             //std::cout << N << "\n";
 
             const int val = std::uniform_int_distribution<int>(0, N)(gen);
@@ -129,18 +130,20 @@ void print(const int i)
 
 int main()
 {
-    //std::vector<int> primes = get_primes(100000);
+    /*std::vector<int> primes = get_primes(std::pow(10, 7));
 
-    //HashTable<int> hashtable(primes.begin(), primes.end());
+    Hash_Table<int> hashtable(primes.begin(), primes.end());
 
-    //std::cout << *hashtable.find(13) << "\n";
+    std::cout << *hashtable.find(13) << "\n";*/
 
     //BinarySearchTree<int> bst(primes.begin(), primes.end());
 
     //std::cout << *bst.find(13);
 
-    //benchmark(Linear_Search());
-    //benchmark(Binary_Search());
+    using Iter = std::vector<int>::iterator;
+
+    benchmark<Linear_Search<Iter>>();
+    benchmark<Binary_Search<Iter>>();
     benchmark<Binary_Search_Tree<int>>();
     benchmark<Hash_Table<int>>();
 

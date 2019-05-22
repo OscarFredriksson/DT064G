@@ -6,6 +6,7 @@
 template<typename Iter>
 class Linear_Search
 {
+public:
     Linear_Search(Iter begin, Iter end):
         begin(begin),
         end(end)
@@ -14,9 +15,11 @@ class Linear_Search
     template<typename T>
     T* find(T val)
     {
-        while(begin++ != end)
+        Iter it = begin;
+
+        while(it++ != end)
         {
-            if(*begin == val)   return &(*begin);
+            if(*it == val)   return &(*it);
         }
 
         return nullptr;

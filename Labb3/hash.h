@@ -58,7 +58,7 @@ class Hash_Table
 {
 public:
     template<typename Iter>
-    HashTable(Iter begin, Iter end)
+    Hash_Table(Iter begin, Iter end)
     {
         hash(begin, end);       
     }
@@ -94,11 +94,11 @@ private:
             hashtable[*iter % size].push(*iter);
         } 
 
-        
-        if(loadFactor() > 0.5)
+        const double load = loadFactor();
+        //std::cout << load << "\n";
+        if(load > 0.5)
         {
-            if(loadFactor() > 1)    size += size;
-            else                    size += 200;
+            size *= 1.5;
             
             hash(begin, end);
         }
@@ -116,7 +116,7 @@ private:
         return double(nrofentries) / hashtable.size();
     }
 
-    size_t size = 100;
+    size_t size = std::pow(10, 6);
 
     std::vector<LinkedList<T>> hashtable;
 };

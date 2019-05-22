@@ -8,7 +8,7 @@ class Binary_Search_Tree
 {
 public:
     template<typename Iter>
-    BinarySearchTree(Iter begin, Iter end)
+    Binary_Search_Tree(Iter begin, Iter end)
     {
         addNode(begin, end, root);
     }   
@@ -26,6 +26,9 @@ public:
 
         return nullptr;
     };
+
+    inline static const std::string path = "benchmarks/binary_search_tree";
+    inline static const std::string name = "Binary Search Tree";
 
 private:
     struct Node
