@@ -6,7 +6,9 @@
 #include <numeric>
 #include <chrono>
 #include <random>
-#include "algorithms.h"
+
+#include "linear.h"
+#include "binary.h"
 #include "bst.h"
 #include "hash.h"
 
@@ -58,7 +60,7 @@ double stdDev(std::vector<double> src)
 }
 
 template<typename Algorithm>
-void benchmark(Algorithm alg)
+void benchmark()
 {
     std::mt19937 gen(std::random_device{}());
 
@@ -66,12 +68,12 @@ void benchmark(Algorithm alg)
     int start_N = std::pow(10, 4);
     int end_N = start_N * 10;
 
-    const std::string path = alg.path + ".data";
+    const std::string path = Algorithm::path + ".data";
     
     std::ofstream file;
     file.open(path.c_str(), std::fstream::out);
 
-    file << alg.name << "\n";
+    file << Algorithm::name << "\n";
     file << "N" << "\t\t\t" << "T[ms]" << "\t\t" << "Stdev[ms]" << "\t" << "Samples" << "\n";
 
     for(int N = start_N; N <= end_N; N += start_N)
@@ -82,6 +84,8 @@ void benchmark(Algorithm alg)
         {
             std::vector<int> src = get_primes(N);
 
+            Algorithm alg(src.begin(), src.end());
+
             //std::cout << N << "\n";
 
             const int val = std::uniform_int_distribution<int>(0, N)(gen);
@@ -90,7 +94,7 @@ void benchmark(Algorithm alg)
 
             auto start = std::chrono::high_resolution_clock::now();
 
-            auto found = alg(src.begin(), src.end(), val);
+            auto found = alg.find(val);//alg(src.begin(), src.end(), val);
 
             auto end = std::chrono::high_resolution_clock::now();
 
@@ -137,8 +141,8 @@ int main()
 
     //benchmark(Linear_Search());
     //benchmark(Binary_Search());
-    //benchmark(Binary_Search_Tree());
-    benchmark(Hash_Table());
+    benchmark<Binary_Search_Tree<int>>();
+    benchmark<Hash_Table<int>>();
 
 
     //std::for_each(primes.begin(), primes.end(), print);

@@ -4,7 +4,7 @@
 #include <memory>
 
 template<typename T>
-class BinarySearchTree
+class Binary_Search_Tree
 {
 public:
     template<typename Iter>

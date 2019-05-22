@@ -5,6 +5,7 @@
 #include <memory>
 #include <list>
 #include <cmath>
+#include <string>
 
 template <typename T>
 class LinkedList
@@ -53,7 +54,7 @@ public:
 };
 
 template<typename T>
-class HashTable
+class Hash_Table
 {
 public:
     template<typename Iter>
@@ -74,7 +75,10 @@ public:
         }
 
         return nullptr;
-    }  
+    } 
+
+    inline static const std::string path = "benchmarks/hash_table";
+    inline static const std::string name = "Hash Table";
 
 private:
     template<typename Iter>
